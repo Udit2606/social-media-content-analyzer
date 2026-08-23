@@ -1,0 +1,198 @@
+@import "tailwindcss";
+
+/*
+ * Design tokens.
+ *
+ * Colour values are chosen to meet WCAG AA (4.5:1) against their own surface,
+ * not picked by eye. `--success` and `--warning` in particular are darker than
+ * a typical "brand green / amber" because they are used for TEXT (badges,
+ * score numbers), where a bright accent colour fails contrast.
+ *
+ * Dark mode is driven purely by the OS preference. There is no toggle and no
+ * JavaScript, which means no theme state, no hydration mismatch and no
+ * flash of the wrong theme on first paint.
+ */
+
+:root {
+  --radius: 0.75rem;
+
+  --background: oklch(0.99 0.002 264);
+  --foreground: oklch(0.16 0.01 264);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.01 264);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.01 264);
+
+  --primary: oklch(0.52 0.24 277);
+  --primary-foreground: oklch(0.99 0.002 264);
+
+  --secondary: oklch(0.96 0.004 264);
+  --secondary-foreground: oklch(0.22 0.01 264);
+
+  --muted: oklch(0.96 0.004 264);
+  --muted-foreground: oklch(0.5 0.015 264);
+
+  --accent: oklch(0.95 0.02 264);
+  --accent-foreground: oklch(0.28 0.05 264);
+
+  --destructive: oklch(0.53 0.21 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --success: oklch(0.5 0.13 155);
+  --success-foreground: oklch(0.99 0 0);
+
+  --warning: oklch(0.5 0.11 65);
+  --warning-foreground: oklch(0.99 0 0);
+
+  --border: oklch(0.91 0.005 264);
+  --input: oklch(0.91 0.005 264);
+  --ring: oklch(0.52 0.24 277);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: oklch(0.15 0.01 264);
+    --foreground: oklch(0.97 0.003 264);
+
+    --card: oklch(0.19 0.012 264);
+    --card-foreground: oklch(0.97 0.003 264);
+
+    --popover: oklch(0.19 0.012 264);
+    --popover-foreground: oklch(0.97 0.003 264);
+
+    --primary: oklch(0.74 0.17 279);
+    --primary-foreground: oklch(0.15 0.01 264);
+
+    --secondary: oklch(0.26 0.012 264);
+    --secondary-foreground: oklch(0.97 0.003 264);
+
+    --muted: oklch(0.26 0.012 264);
+    --muted-foreground: oklch(0.72 0.015 264);
+
+    --accent: oklch(0.29 0.03 264);
+    --accent-foreground: oklch(0.95 0.01 264);
+
+    --destructive: oklch(0.7 0.19 25);
+    --destructive-foreground: oklch(0.15 0.01 264);
+
+    --success: oklch(0.75 0.15 155);
+    --success-foreground: oklch(0.15 0.01 264);
+
+    --warning: oklch(0.82 0.15 75);
+    --warning-foreground: oklch(0.18 0.03 70);
+
+    --border: oklch(1 0 0 / 14%);
+    --input: oklch(1 0 0 / 18%);
+    --ring: oklch(0.74 0.17 279);
+  }
+}
+
+/*
+ * Registering the tokens with @theme generates the matching utilities, so
+ * components write `text-success` / `bg-warning` / `stroke-success` instead of
+ * arbitrary `text-[var(--success)]` values.
+ */
+@theme inline {
+  --font-sans: var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-display), var(--font-sans), ui-sans-serif, system-ui, sans-serif;
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+
+  --animate-fade-up: fade-up 0.35s ease-out both;
+  --animate-shimmer: shimmer 1.6s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes shimmer {
+    0%, 100% { opacity: 1; }
+    50%      { opacity: 0.45; }
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+  :focus-visible {
+    outline: 2px solid var(--ring);
+    outline-offset: 2px;
+  }
+}
+
+/* Respect users who have asked their OS to reduce motion. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/*
+ * Ambient page background.
+ *
+ * Rendered as a fixed decorative layer behind the app rather than on <body>,
+ * so cards keep a solid surface and every measured contrast ratio still holds.
+ * Two soft radial washes plus a vertical gradient: enough depth to stop the
+ * page reading as flat white, subtle enough not to compete with content.
+ */
+.app-background {
+  background-image:
+    radial-gradient(58rem 34rem at 10% -4%, oklch(0.9 0.075 295 / 0.55), transparent 62%),
+    radial-gradient(52rem 32rem at 92% 4%, oklch(0.91 0.06 236 / 0.5), transparent 62%),
+    linear-gradient(180deg, oklch(0.995 0.004 285) 0%, oklch(0.985 0.007 268) 100%);
+}
+
+@media (prefers-color-scheme: dark) {
+  .app-background {
+    background-image:
+      radial-gradient(58rem 34rem at 10% -4%, oklch(0.42 0.16 288 / 0.4), transparent 62%),
+      radial-gradient(52rem 32rem at 92% 4%, oklch(0.38 0.13 242 / 0.34), transparent 62%),
+      linear-gradient(180deg, oklch(0.155 0.014 278) 0%, oklch(0.13 0.011 266) 100%);
+  }
+}
+
+/* Headline face: heavier and tighter than body copy. */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+}
