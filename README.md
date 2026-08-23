@@ -26,7 +26,6 @@
 18. [Security Considerations](#security-considerations)
 19. [Limitations](#limitations)
 20. [Future Improvements](#future-improvements)
-21. [Screenshots](#screenshots)
 
 ---
 
@@ -492,7 +491,6 @@ Stated plainly, not omitted:
 
 ## Future Improvements
 
-- Write the backend `Dockerfile` and complete a live deployment (Render + Vercel)
 - Word-level PDF text extraction to resolve the same-baseline column-ordering limitation
 - A committed automated frontend test suite (component and integration tests)
 - Batch upload and side-by-side comparison across multiple documents
@@ -501,18 +499,3 @@ Stated plainly, not omitted:
 - CI pipeline running the backend test suite and frontend build on every push
 - Additional platforms (TikTok, Threads) and multi-language OCR support
 
----
-
-## Screenshots
-
-> Screenshots have not yet been captured for this README. To add them: run the app locally per [Local Setup](#local-setup), capture the states below, save them under `docs/screenshots/`, and reference them here.
-
-| Screen | Description |
-|---|---|
-| Upload | Drag-and-drop / file-picker empty state |
-| Extraction | Extracted text shown while AI analysis is still in progress |
-| Analysis results | Engagement score, breakdown, strengths, weaknesses, suggestions |
-| Content metrics | Deterministic readability card |
-| Improve My Post | Platform selector, instruction field, generated rewrite |
-| Platform optimization | Per-platform fit score and recommendations |
-| Error state | An example of a handled failure with a retry action |
