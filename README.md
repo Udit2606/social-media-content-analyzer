@@ -80,13 +80,13 @@ The system is split cleanly into what a deterministic algorithm can compute reli
 
 ## Demo / Hosted Application
 
-> **Not yet deployed.** This project has been fully built and tested locally (see [Local Setup](#local-setup)) but does not currently have a live URL. See [Frontend Deployment](#frontend-deployment) and [Backend Deployment](#backend-deployment) for the intended deployment path.
-
 | | URL |
 |---|---|
-| Frontend | _to be added after deployment_ |
-| Backend API | _to be added after deployment_ |
-| API docs (`/docs`) | _to be added after deployment_ |
+| Frontend | [thepostpilotai.vercel.app](https://thepostpilotai.vercel.app) |
+| Backend API | [social-media-content-analyzer-3m1e.onrender.com](https://social-media-content-analyzer-3m1e.onrender.com) |
+| API docs (`/docs`) | [social-media-content-analyzer-3m1e.onrender.com/docs](https://social-media-content-analyzer-3m1e.onrender.com/docs) |
+
+Frontend is deployed on Vercel; backend runs as a Docker web service on Render's free tier. The free tier spins down after inactivity, so the first request after idle can take up to ~50 seconds while the instance wakes up — subsequent requests are fast.
 
 ---
 
@@ -427,9 +427,7 @@ Vercel auto-detects the Next.js App Router and requires no additional configurat
 
 **Recommended: Render (or any host supporting a custom Docker image), not a plain Python buildpack.**
 
-Tesseract OCR is a compiled system binary, not a Python package. A standard Python runtime will install `pytesseract` successfully and then fail at runtime with "tesseract is not installed" the first time an image is uploaded. The container image must install the binary itself, e.g. `apt-get install -y tesseract-ocr` in a Dockerfile based on `python:3.9-slim`, alongside `pip install -r requirements.txt`.
-
-> **Note:** this repository does not yet include a `Dockerfile`. One is required before the backend can be deployed to a container-based host and is the immediate next step for this project — see [Limitations](#limitations).
+Tesseract OCR is a compiled system binary, not a Python package. A standard Python runtime will install `pytesseract` successfully and then fail at runtime with "tesseract is not installed" the first time an image is uploaded. The container image must install the binary itself — see [`backend/Dockerfile`](backend/Dockerfile), which installs `tesseract-ocr` via `apt-get` in a `python:3.11-slim` base alongside `pip install -r requirements.txt`.
 
 Once deployed:
 
@@ -478,7 +476,7 @@ Every failure, from client-side validation through the deepest AI call, resolves
 
 Stated plainly, not omitted:
 
-- **Not yet deployed.** No live URL exists; no `Dockerfile` has been written yet for the backend.
+- **Free-tier hosting.** The backend runs on Render's free tier, which spins down after inactivity — the first request after idle can take up to ~50 seconds.
 - **Gemini free-tier quota is small** (20 requests/day per model at time of writing) and has not been load-tested; a production deployment would need a paid tier or aggressive caching.
 - **PyMuPDF column-ordering edge case**: text in a two-column layout sharing an exact baseline can be extracted out of order. Documented and covered by a `strict` `xfail` test rather than silently wrong; the realistic multi-row case is unaffected.
 - **Syllable counting for readability is heuristic** (vowel-group counting), not dictionary-based — standard practice for readability tools, but not linguistically exact.
